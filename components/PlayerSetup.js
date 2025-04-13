@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function PlayerSetup() {
-  const [players, setPlayers] = useState<string[]>([]);
+const [players, setPlayers] = useState([]);
   const [playerName, setPlayerName] = useState("");
   const router = useRouter();
 
