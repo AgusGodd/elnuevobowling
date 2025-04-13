@@ -1,4 +1,3 @@
-// components/PlayerSetup.js
 'use client'; 
 
 import { useState } from "react";
@@ -24,8 +23,15 @@ export default function PlayerSetup() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-6 bg-white text-center">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4 py-6 text-center">
       <h1 className="text-3xl font-bold mb-6">Configuración de Jugadores</h1>
+
+      {/* Instrucciones para el usuario */}
+      <div className="text-left mb-6 w-full max-w-lg">
+        <p className="text-lg">
+          Para empezar, ingresa los nombres de los jugadores. Luego, cuando tengas todos los jugadores agregados, podrás comenzar el juego. En el juego, cada jugador tiene 10 rondas, y puedes anotar hasta 10 pinos por turno. ¡Buena suerte!
+        </p>
+      </div>
 
       <input
         type="text"
@@ -59,3 +65,4 @@ export default function PlayerSetup() {
     </div>
   );
 }
+
