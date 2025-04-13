@@ -1,6 +1,6 @@
 // pages/playersetup.js
-import PlayerSetup from '../components/PlayerSetup';  // Importas el componente de PlayerSetup
+import PlayerSetup from "../components/PlayerSetup";
 
 export default function PlayerSetupPage() {
-  return <PlayerSetup />;  // Usas el componente dentro de la página
+  return <PlayerSetup />;
 }
