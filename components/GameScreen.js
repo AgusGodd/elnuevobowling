@@ -1,15 +1,14 @@
-import { useRouter } from "next/router"; // Usar el hook de Next.js para acceder a la URL
+// components/GameScreen.js
+import { useRouter } from "next/router";
 
 export default function GameScreen() {
-  const router = useRouter(); // Obtener la lista de jugadores desde la query
-  const { players } = router.query; // Recibir la lista de jugadores que viene de la URL
+  const router = useRouter();
+  const { players } = router.query; // Obtenemos los jugadores desde la URL
 
-  // Si no se cargan los jugadores, mostrar un mensaje de carga
   if (!players) {
     return <div>Cargando...</div>;
   }
 
-  // Convertir la lista de jugadores desde un string a un array
   const playersList = JSON.parse(players);
 
   return (
