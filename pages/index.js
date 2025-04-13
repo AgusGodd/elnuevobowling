@@ -1,9 +1,13 @@
-import PlayerSetup from "../components/PlayerSetup";
+import PlayerSetup from '../components/PlayerSetup';  // Correcta ruta a PlayerSetup
+import GameScreen from '../components/GameScreen';    // Correcta ruta a GameScreen
+import FinalScreen from '../components/FinalScreen';  // Correcta ruta a FinalScreen
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-200 to-orange-100 text-black p-4">
-      <PlayerSetup />
+    <div>
+      <PlayerSetup />  {/* Usando PlayerSetup */}
+      <GameScreen />   {/* Usando GameScreen */}
+      <FinalScreen />  {/* Usando FinalScreen */}
     </div>
   );
 }
