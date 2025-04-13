@@ -1,4 +1,4 @@
-'use client';
+'use client'; 
 
 import { useState } from "react";
 import { useRouter } from "next/router"; // Usar el hook de Next.js para redirigir
@@ -19,7 +19,7 @@ export default function PlayerSetup() {
   const startGame = () => {
     // Redirigir a la página de juego y pasar los jugadores como parámetro
     router.push({
-      pathname: "/GameScreen", // Redirigir a la página de juego
+      pathname: "/gamescreen", // Asegúrate de usar minúsculas aquí
       query: { players: JSON.stringify(players) }, // Pasar la lista de jugadores como parámetro en la URL
     });
   };
@@ -60,4 +60,3 @@ export default function PlayerSetup() {
     </div>
   );
 }
-
