@@ -19,7 +19,7 @@ export default function PlayerSetup() {
   const startGame = () => {
     // Redirigir a la página de juego y pasar los jugadores como parámetro
     router.push({
-      pathname: "/gamescreen", // Redirigir a la página de juego
+      pathname: "/GameScreen", // Redirigir a la página de juego
       query: { players: JSON.stringify(players) }, // Pasar la lista de jugadores como parámetro en la URL
     });
   };
