@@ -1,6 +1,6 @@
 // pages/gamescreen.js
-import GameScreen from '../components/GameScreen';  // Importas el componente de GameScreen
+import GameScreen from "../components/GameScreen";
 
 export default function GameScreenPage() {
-  return <GameScreen />;  // Usas el componente dentro de la página
+  return <GameScreen />;
 }
