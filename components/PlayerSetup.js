@@ -55,4 +55,60 @@ const [players, setPlayers] = useState([]);
     </div>
   );
 }
+import { useState } from "react";
+import { useRouter } from "next/router"; // Usar el hook de Next.js para redirigir
+
+export default function PlayerSetup() {
+  const [players, setPlayers] = useState([]); // Lista de jugadores
+  const [playerName, setPlayerName] = useState(""); // Nombre del jugador
+  const router = useRouter(); // Hook para la redirección
+
+  const addPlayer = () => {
+    if (playerName && !players.includes(playerName)) {
+      setPlayers([...players, playerName]); // Agregar jugador a la lista
+      setPlayerName(""); // Limpiar el campo de entrada
+    }
+  };
+
+  // Función para empezar el juego
+  const startGame = () => {
+    // Redirigir a la página de juego y pasar los jugadores como parámetro
+    router.push({
+      pathname: "/gamescreen", // Redirigir a la página de juego
+      query: { players: JSON.stringify(players) }, // Pasar la lista de jugadores como parámetro en la URL
+    });
+  };
+
+  return (
+    <div className="text-center">
+      <h1 className="text-3xl mb-4">Configuración de Jugadores</h1>
+      <input
+        type="text"
+        value={playerName}
+        onChange={(e) => setPlayerName(e.target.value)} // Actualizar el nombre del jugador
+        placeholder="Nombre del jugador"
+        className="border-2 p-2 mb-4"
+      />
+      <button
+        onClick={addPlayer} // Agregar jugador a la lista
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Agregar Jugador
+      </button>
+
+      <div className="mt-4">
+        {players.map((player, index) => (
+          <p key={index}>{player}</p> // Mostrar jugadores
+        ))}
+      </div>
+
+      <button
+        onClick={startGame} // Empezar el juego
+        className="bg-green-500 text-white px-6 py-2 rounded mt-6"
+      >
+        Empezar Juego
+      </button>
+    </div>
+  );
+}
 
