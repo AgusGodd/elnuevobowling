@@ -7,33 +7,31 @@ export default function FinalScreen() {
   const router = useRouter();
   const { players, scores } = router.query;
 
-  // Si no hay jugadores o puntajes, mostrar un mensaje de carga
   if (!players || !scores) {
     return <div>Cargando...</div>;
   }
 
-  // Convertir la lista de jugadores y puntajes desde strings a arrays
   const playersList = JSON.parse(players);
   const scoresList = JSON.parse(scores);
 
-  // Calcular el puntaje total por jugador
+  // Calcular el puntaje total de cada jugador sumando los puntajes de todas las rondas
   const totalScores = playersList.reduce((acc, player) => {
     const total = scoresList[player].reduce((sum, round) => sum + round.score, 0);
-    acc[player] = total; // Aseguramos que el puntaje total se asocie correctamente con el jugador
+    acc[player] = total;
     return acc;
   }, {});
 
-  // Ordenar jugadores por puntaje total
+  // Ordenar los jugadores por su puntaje total
   const sortedPlayers = playersList.sort((a, b) => totalScores[b] - totalScores[a]);
 
   const restartGame = () => {
-    router.push("/playersetup"); // Redirigir al inicio
+    router.push("/playersetup");
   };
 
   return (
     <div className="text-center">
       <h2 className="text-3xl mb-4">¡Juego Terminado!</h2>
-      
+
       {/* Mostrar Podio */}
       <div className="mb-6">
         <h3 className="text-2xl font-bold mb-2">Podio</h3>
