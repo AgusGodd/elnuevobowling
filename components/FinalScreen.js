@@ -38,4 +38,42 @@ export default function FinalScreen() {
       </div>
 
       <div className="mb-6">
-        <h3 className="
+        <h3 className="text-2xl font-bold mb-2">Historial de Tiros</h3>
+        {playersList.map((player) => (
+          <div key={player} className="mb-4">
+            <h4 className="font-bold">{player}</h4>
+            <table className="min-w-full table-auto border-collapse">
+              <thead>
+                <tr>
+                  <th className="border p-2">Ronda</th>
+                  <th className="border p-2">Tiro 1</th>
+                  <th className="border p-2">Tiro 2</th>
+                  <th className="border p-2">Tiro 3 (Ronda 10)</th>
+                  <th className="border p-2">Puntaje Ronda</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scoresList[player].map((round, index) => (
+                  <tr key={index}>
+                    <td className="border p-2">{index + 1}</td>
+                    <td className="border p-2">{round.turns[0]}</td>
+                    <td className="border p-2">{round.turns[1]}</td>
+                    <td className="border p-2">{round.turns[2] !== undefined ? round.turns[2] : '-'}</td>
+                    <td className="border p-2">{round.score}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </div>
+
+      <button
+        onClick={restartGame}
+        className="bg-blue-500 text-white px-6 py-2 rounded"
+      >
+        Volver a Jugar
+      </button>
+    </div>
+  );
+}
