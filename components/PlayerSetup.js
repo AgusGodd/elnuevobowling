@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function PlayerSetup() {
-  const [players, setPlayers] = useState<string[]>([]);
+  const [players, setPlayers] = useState([]);
   const [playerName, setPlayerName] = useState('');
   const router = useRouter();
 
@@ -16,7 +16,7 @@ export default function PlayerSetup() {
     }
   };
 
-  const removePlayer = (index: number) => {
+  const removePlayer = (index) => {
     const newPlayers = [...players];
     newPlayers.splice(index, 1);
     setPlayers(newPlayers);
@@ -84,4 +84,5 @@ export default function PlayerSetup() {
     </div>
   );
 }
+
 
