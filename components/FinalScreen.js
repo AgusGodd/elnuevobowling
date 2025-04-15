@@ -14,6 +14,7 @@ export default function FinalScreen() {
   const playersList = JSON.parse(players);
   const scoresList = JSON.parse(scores);
 
+  // Ordenar jugadores por puntaje total
   const sortedPlayers = playersList.sort((a, b) => {
     const scoreA = scoresList[a].reduce((acc, round) => acc + round.score, 0);
     const scoreB = scoresList[b].reduce((acc, round) => acc + round.score, 0);
@@ -30,11 +31,15 @@ export default function FinalScreen() {
       
       <div className="mb-6">
         <h3 className="text-2xl font-bold mb-2">Podio</h3>
-        {sortedPlayers.slice(0, 3).map((player, index) => (
-          <div key={index} className="mb-2">
-            <p>{index + 1}. {player} - {scoresList[player].reduce((acc, round) => acc + round.score, 0)} puntos</p>
-          </div>
-        ))}
+        {sortedPlayers.slice(0, 3).map((player, index) => {
+          // Calcular el puntaje total para cada jugador
+          const totalScore = scoresList[player].reduce((acc, round) => acc + round.score, 0);
+          return (
+            <div key={index} className="mb-2">
+              <p>{index + 1}. {player} - {totalScore} puntos</p>
+            </div>
+          );
+        })}
       </div>
 
       <div className="mb-6">
@@ -53,15 +58,18 @@ export default function FinalScreen() {
                 </tr>
               </thead>
               <tbody>
-                {scoresList[player].map((round, index) => (
-                  <tr key={index}>
-                    <td className="border p-2">{index + 1}</td>
-                    <td className="border p-2">{round.turns[0]}</td>
-                    <td className="border p-2">{round.turns[1]}</td>
-                    <td className="border p-2">{round.turns[2] !== undefined ? round.turns[2] : '-'}</td>
-                    <td className="border p-2">{round.score}</td>
-                  </tr>
-                ))}
+                {scoresList[player].map((round, index) => {
+                  const roundScore = round.turns.reduce((acc, turn) => acc + (turn || 0), 0);
+                  return (
+                    <tr key={index}>
+                      <td className="border p-2">{index + 1}</td>
+                      <td className="border p-2">{round.turns[0]}</td>
+                      <td className="border p-2">{round.turns[1]}</td>
+                      <td className="border p-2">{round.turns[2] !== undefined ? round.turns[2] : '-'}</td>
+                      <td className="border p-2">{roundScore}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
