@@ -19,17 +19,20 @@ export default function PlayerSetup() {
   };
 
   const startGame = () => {
-    router.push({
-      pathname: "/gamescreen",
-      query: { players: JSON.stringify(players.map(p => p.name)) },
-    });
+    document.body.classList.add("fade-out");
+    setTimeout(() => {
+      router.push({
+        pathname: "/gamescreen",
+        query: { players: JSON.stringify(players.map(p => p.name)) },
+      });
+    }, 300);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#1f1f2e] px-4 py-8 text-center text-white font-mono">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#2b2b36] to-[#1f1f2e] px-4 py-10 text-center text-white font-mono">
       <h1 className="text-4xl font-bold mb-6 tracking-tight">👥 Configuración de Jugadores</h1>
 
-      <div className="text-left mb-6 w-full max-w-md bg-[#2a2a3b] rounded-xl p-4 shadow-md">
+      <div className="text-left mb-6 w-full max-w-md bg-[#3c3c4d] rounded-xl p-4 shadow-md">
         <p className="text-md leading-relaxed">
           Ingresá los nombres de los jugadores para comenzar. Cada uno tendrá 10 rondas 🎳. 
           En cada ronda podés anotar hasta 10 pinos. ¡Listos para jugar! 🕹️
@@ -41,17 +44,17 @@ export default function PlayerSetup() {
         value={playerName}
         onChange={(e) => setPlayerName(e.target.value)}
         placeholder="Nombre del jugador"
-        className="bg-[#323247] border border-[#5f5f7a] text-white placeholder-gray-400 rounded-lg px-4 py-2 w-full max-w-xs mb-3 outline-none focus:ring-2 focus:ring-pink-400 transition-all"
+        className="bg-[#48485c] border border-[#6c6c8a] text-white placeholder-gray-400 rounded-lg px-4 py-3 w-full max-w-xs mb-3 outline-none focus:ring-2 focus:ring-pink-400 transition-all text-base"
       />
 
       <button
         onClick={addPlayer}
-        className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-6 py-2 rounded-xl mb-6 w-full max-w-xs transition-all duration-150 active:scale-95"
+        className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-6 py-3 rounded-xl mb-6 w-full max-w-xs transition-all duration-150 active:scale-95 text-base"
       >
         ➕ Agregar Jugador
       </button>
 
-      <div className="w-full max-w-xs text-left bg-[#2a2a3b] p-4 rounded-lg shadow-sm">
+      <div className="w-full max-w-xs text-left bg-[#3c3c4d] p-4 rounded-lg shadow-sm">
         <h2 className="text-lg font-semibold mb-2">Jugadores:</h2>
         <ul className="space-y-1">
           {players.map((player, index) => (
@@ -69,7 +72,7 @@ export default function PlayerSetup() {
       {players.length > 0 && (
         <button
           onClick={startGame}
-          className="mt-8 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl w-full max-w-xs transition-all duration-200 hover:shadow-lg active:scale-95 animate-bounce-short"
+          className="mt-8 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl w-full max-w-xs transition-all duration-200 hover:shadow-lg active:scale-95 animate-bounce-short text-base"
         >
           🚀 Empezar Juego
         </button>
@@ -102,6 +105,15 @@ export default function PlayerSetup() {
 
         .animate-bounce-short {
           animation: bounce-short 1.5s infinite;
+        }
+
+        .fade-out {
+          animation: fadeOut 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
         }
       `}</style>
     </div>
