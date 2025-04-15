@@ -1,4 +1,8 @@
 /* globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
     font-family: 'Arial', sans-serif;
   }
@@ -14,4 +18,3 @@ body {
   button:hover {
     opacity: 0.8;
   }
-  
