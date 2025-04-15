@@ -135,40 +135,50 @@ export default function GameScreen() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-4 min-h-screen text-center">
-      <div className="mb-6">
-        <h1 className="text-4xl font-bold mb-2">Ronda {currentRound + 1}</h1>
-        <p className="text-xl font-medium mb-1">Turno de: <span className="font-semibold">{currentPlayer}</span></p>
-        <p className="text-lg font-bold">Tiro {currentThrow + 1}</p>
+    <div className="flex flex-col items-center justify-center px-6 py-8 min-h-screen bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500">
+      <div className="mb-6 bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
+        <h1 className="text-5xl font-bold text-center text-gradient mb-4">Ronda {currentRound + 1}</h1>
+        <p className="text-2xl font-semibold text-center mb-1 text-yellow-400">Turno de: <span className="font-bold text-white">{currentPlayer}</span> 🎯</p>
+        <p className="text-lg font-medium text-center mb-2">Tiro {currentThrow + 1}</p>
       </div>
 
-      <p className="mb-2 text-gray-600">Pinos disponibles: {pinsLeft}</p>
+      <p className="mb-4 text-white text-xl font-semibold">Pinos disponibles: <span className="text-yellow-300">{pinsLeft}</span> 🎳</p>
 
-      <input
-        type="number"
-        min="0"
-        max={pinsLeft}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        className="text-center text-lg border-2 border-gray-400 p-2 w-24 rounded mb-2"
-        placeholder={`0-${pinsLeft}`}
-      />
-      <button
-        onClick={handleConfirmThrow}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Confirmar Tiro
-      </button>
+      <div className="flex justify-center items-center gap-4">
+        <input
+          type="number"
+          min="0"
+          max={pinsLeft}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="text-center text-lg border-2 border-yellow-500 p-3 w-24 rounded-lg bg-gray-900 text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-300"
+          placeholder={`0-${pinsLeft}`}
+        />
+        <button
+          onClick={handleConfirmThrow}
+          className="bg-yellow-500 text-black px-6 py-3 rounded-lg shadow-xl hover:bg-yellow-600 transform transition-all duration-300"
+        >
+          Confirmar Tiro 🔥
+        </button>
+      </div>
 
       <div className="mt-8 w-full max-w-md grid grid-cols-1 gap-4">
         {playersList.map((player) => (
-          <div key={player} className="border border-gray-400 p-4 rounded shadow-sm bg-white">
-            <p className="font-bold text-lg">{player}</p>
-            <p className="text-gray-700">Puntos actuales: {getTotalScore(player)}</p>
+          <div key={player} className="border border-gray-700 p-6 rounded-xl shadow-md bg-gray-800 hover:scale-105 transition-transform duration-200">
+            <p className="font-bold text-xl text-white">{player} 🌟</p>
+            <p className="text-gray-300">Puntos actuales: <span className="text-yellow-400">{getTotalScore(player)}</span></p>
+            <div className="mt-2 flex justify-between text-gray-400">
+              {scores[player].map((frame, index) => (
+                <div key={index} className="w-8 h-8 bg-gray-600 text-center rounded-full flex justify-center items-center text-white">
+                  {frame.turns[0] !== undefined ? frame.turns[0] : '-'}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
     </div>
   );
 }
+
 
