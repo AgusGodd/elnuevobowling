@@ -15,7 +15,7 @@ export default function GameScreen() {
   const [playersList, setPlayersList] = useState([]);
 
   useEffect(() => {
-    if (players && typeof players === 'string') {
+    if (players) {
       try {
         const parsedPlayers = JSON.parse(players);
         const initialScores = {};
@@ -37,6 +37,11 @@ export default function GameScreen() {
   const currentPlayer = playersList[currentPlayerIndex];
   const currentFrame = scores[currentPlayer][currentRound];
 
+  // Función para calcular el puntaje total de un jugador
+  const getTotalScore = (player) => {
+    return scores[player].reduce((total, round) => total + round.score, 0);
+  };
+
   const handleThrow = (score) => {
     const newScores = { ...scores };
     const playerFrame = newScores[currentPlayer][currentRound];
@@ -46,27 +51,25 @@ export default function GameScreen() {
     let nextPlayerIndex = currentPlayerIndex;
     let nextRound = currentRound;
 
-    const isStrike = score === 10;
-    const firstThrow = playerFrame.turns[0] || 0;
-    const secondThrow = playerFrame.turns[1] || 0;
-
     if (currentRound === 9) {
-      if (currentThrow === 0 && isStrike) {
+      const first = playerFrame.turns[0] || 0;
+      const second = playerFrame.turns[1] || 0;
+
+      if (currentThrow === 0 && score === 10) {
         setPinsLeft(10);
         setCurrentThrow(1);
         setScores(newScores);
         return;
-      }
-      if (currentThrow === 1) {
-        const total = firstThrow + score;
-        if (firstThrow === 10 || total === 10) {
+      } else if (currentThrow === 1) {
+        if (first === 10 || first + score === 10) {
           setPinsLeft(10);
           setCurrentThrow(2);
           setScores(newScores);
           return;
         }
       }
-      if (currentThrow === 2 || (currentThrow === 1 && firstThrow + secondThrow < 10)) {
+
+      if (currentThrow === 2 || (currentThrow === 1 && first + second < 10)) {
         nextPlayerIndex++;
         if (nextPlayerIndex >= playersList.length) {
           router.push({
@@ -82,13 +85,14 @@ export default function GameScreen() {
           return;
         }
       }
+
       setPinsLeft(10);
       setCurrentThrow(nextThrow);
       setScores(newScores);
       return;
     }
 
-    if (currentThrow === 0 && isStrike) {
+    if (currentThrow === 0 && score === 10) {
       nextThrow = 0;
       nextPlayerIndex++;
     } else if (currentThrow === 1) {
@@ -138,6 +142,17 @@ export default function GameScreen() {
         className="text-center text-lg border-2 border-gray-400 p-2 w-24 rounded mb-6"
         placeholder={`0-${pinsLeft}`}
       />
+
+      <div className="mt-4">
+        {playersList.map((player) => (
+          <div key={player} className="mb-2">
+            <p className="font-semibold">{player}</p>
+            <p>Puntos actuales: {getTotalScore(player)}</p>
+            <p>Puntos totales: {getTotalScore(player)}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
+
