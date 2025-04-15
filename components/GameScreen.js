@@ -39,15 +39,17 @@ export default function GameScreen() {
   const currentFrame = scores[currentPlayer][currentRound];
 
   const calculateRoundScore = (round) => {
-    return round.turns.reduce((acc, score) => acc + score, 0);
+    let score = round.turns.reduce((acc, val) => acc + val, 0);
+    if (round.turns[0] === 10 && currentRound !== 9) score += 10; // Chuza = 20
+    return score;
   };
 
   const getTotalScore = (player) => {
     return scores[player].reduce((total, round) => total + calculateRoundScore(round), 0);
   };
 
-  const handleThrow = () => {
-    const score = parseInt(inputValue);
+  const handleConfirmThrow = () => {
+    const score = parseInt(inputValue, 10);
     if (isNaN(score) || score < 0 || score > pinsLeft) return;
 
     const newScores = { ...scores };
@@ -148,8 +150,8 @@ export default function GameScreen() {
         placeholder={`0-${pinsLeft}`}
       />
       <button
-        onClick={handleThrow}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        onClick={handleConfirmThrow}
+        className="bg-blue-500 text-white px-4 py-2 rounded"
       >
         Confirmar Tiro
       </button>
@@ -165,4 +167,3 @@ export default function GameScreen() {
     </div>
   );
 }
-
