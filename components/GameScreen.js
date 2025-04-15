@@ -13,6 +13,7 @@ export default function GameScreen() {
   const [scores, setScores] = useState({});
   const [pinsLeft, setPinsLeft] = useState(10);
   const [playersList, setPlayersList] = useState([]);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     if (players) {
@@ -41,12 +42,14 @@ export default function GameScreen() {
     return round.turns.reduce((acc, score) => acc + score, 0);
   };
 
-  // Función para calcular el puntaje total de un jugador
   const getTotalScore = (player) => {
     return scores[player].reduce((total, round) => total + calculateRoundScore(round), 0);
   };
 
-  const handleThrow = (score) => {
+  const handleThrow = () => {
+    const score = parseInt(inputValue);
+    if (isNaN(score) || score < 0 || score > pinsLeft) return;
+
     const newScores = { ...scores };
     const playerFrame = newScores[currentPlayer][currentRound];
     playerFrame.turns[currentThrow] = score;
@@ -63,12 +66,14 @@ export default function GameScreen() {
         setPinsLeft(10);
         setCurrentThrow(1);
         setScores(newScores);
+        setInputValue('');
         return;
       } else if (currentThrow === 1) {
         if (first === 10 || first + score === 10) {
           setPinsLeft(10);
           setCurrentThrow(2);
           setScores(newScores);
+          setInputValue('');
           return;
         }
       }
@@ -86,6 +91,7 @@ export default function GameScreen() {
           setCurrentThrow(0);
           setPinsLeft(10);
           setScores(newScores);
+          setInputValue('');
           return;
         }
       }
@@ -93,6 +99,7 @@ export default function GameScreen() {
       setPinsLeft(10);
       setCurrentThrow(nextThrow);
       setScores(newScores);
+      setInputValue('');
       return;
     }
 
@@ -122,14 +129,7 @@ export default function GameScreen() {
     setCurrentPlayerIndex(nextPlayerIndex);
     setCurrentRound(nextRound);
     setScores(newScores);
-  };
-
-  const handleInput = (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (!isNaN(val) && val >= 0 && val <= pinsLeft) {
-      e.target.value = '';
-      handleThrow(val);
-    }
+    setInputValue('');
   };
 
   return (
@@ -142,17 +142,23 @@ export default function GameScreen() {
         type="number"
         min="0"
         max={pinsLeft}
-        onChange={handleInput}
-        className="text-center text-lg border-2 border-gray-400 p-2 w-24 rounded mb-6"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        className="text-center text-lg border-2 border-gray-400 p-2 w-24 rounded mb-2"
         placeholder={`0-${pinsLeft}`}
       />
+      <button
+        onClick={handleThrow}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Confirmar Tiro
+      </button>
 
-      <div className="mt-4">
+      <div className="mt-6">
         {playersList.map((player) => (
           <div key={player} className="mb-2">
             <p className="font-semibold">{player}</p>
             <p>Puntos actuales: {getTotalScore(player)}</p>
-            <p>Puntos totales: {getTotalScore(player)}</p>
           </div>
         ))}
       </div>
