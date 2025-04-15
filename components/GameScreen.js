@@ -134,36 +134,48 @@ export default function GameScreen() {
     setInputValue('');
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center px-4 min-h-screen text-center">
-      <h1 className="text-3xl font-bold mb-4">
-        Ronda {currentRound + 1}, {currentPlayer}, Tiro {currentThrow + 1}
-      </h1>
-      <p className="mb-2 text-gray-600">Pinos disponibles: {pinsLeft}</p>
-      <input
-        type="number"
-        min="0"
-        max={pinsLeft}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        className="text-center text-lg border-2 border-gray-400 p-2 w-24 rounded mb-2"
-        placeholder={`0-${pinsLeft}`}
-      />
-      <button
-        onClick={handleConfirmThrow}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Confirmar Tiro
-      </button>
+ return (
+  <div className="flex flex-col items-center justify-start px-4 py-8 min-h-screen text-center">
+    <h1 className="text-4xl font-bold mb-4">Ronda {currentRound + 1}</h1>
 
-      <div className="mt-6">
-        {playersList.map((player) => (
-          <div key={player} className="mb-2">
-            <p className="font-semibold">{player}</p>
-            <p>Puntos actuales: {getTotalScore(player)}</p>
-          </div>
-        ))}
-      </div>
+    <div className="text-xl mb-1 font-medium">
+      Turno de: <span className="font-semibold">{currentPlayer}</span>
     </div>
-  );
-}
+
+    <div className="text-lg font-semibold italic mb-6">
+      {currentThrow === 0 ? 'Primer tiro' : currentThrow === 1 ? 'Segundo tiro' : 'Tercer tiro'}
+    </div>
+
+    <p className="mb-2 text-gray-600">Pinos disponibles: {pinsLeft}</p>
+
+    <input
+      type="number"
+      min="0"
+      max={pinsLeft}
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      className="text-center text-lg border-2 border-gray-400 p-2 w-24 rounded mb-2"
+      placeholder={`0-${pinsLeft}`}
+    />
+
+    <button
+      onClick={handleConfirmThrow}
+      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200"
+    >
+      Confirmar Tiro
+    </button>
+
+    <div className="mt-8 w-full max-w-md">
+      {playersList.map((player) => (
+        <div
+          key={player}
+          className="border border-gray-300 rounded-lg shadow-md p-4 mb-4 text-left bg-white"
+        >
+          <p className="font-bold text-lg">{player}</p>
+          <p>Puntos actuales: <span className="font-semibold">{getTotalScore(player)}</span></p>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
