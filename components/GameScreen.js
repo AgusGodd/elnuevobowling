@@ -37,9 +37,13 @@ export default function GameScreen() {
   const currentPlayer = playersList[currentPlayerIndex];
   const currentFrame = scores[currentPlayer][currentRound];
 
+  const calculateRoundScore = (round) => {
+    return round.turns.reduce((acc, score) => acc + score, 0);
+  };
+
   // Función para calcular el puntaje total de un jugador
   const getTotalScore = (player) => {
-    return scores[player].reduce((total, round) => total + round.score, 0);
+    return scores[player].reduce((total, round) => total + calculateRoundScore(round), 0);
   };
 
   const handleThrow = (score) => {
